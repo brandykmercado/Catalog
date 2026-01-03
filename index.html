@@ -260,7 +260,7 @@
     <header>
       <h1>My Maker Catalog</h1>
       <p>
-        Things I make by hand — sewing and 3D printing projects you can request.
+        Things I make by hand. Sewing and 3D printing projects you can request.
       </p>
       <div class="filters">
         <button class="filter-btn active" onclick="filterItems('all', this)">
@@ -383,7 +383,7 @@
           <button type="button" class="remove-btn">Remove</button>
         </div>
         <input class="qty" type="number" min="1" value="${item.qty}" />
-        <textarea placeholder="Notes for this item">${item.notes}</textarea>
+        <textarea placeholder="Notes for this item (color, special requests, etc.)">${item.notes}</textarea>
       `;
 
           wrap.querySelector(".remove-btn").onclick = () =>
