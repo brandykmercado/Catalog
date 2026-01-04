@@ -4,9 +4,291 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>My Maker Catalog</title>
-        <style>
-            :root { --bg: #0f172a; --card: #1e293b; --muted: #94a3b8; --text: #e5e7eb; --accent: #38bdf8; --accent-soft: #0ea5e9; --border: #1e293b; --radius: 14px; } * { box-sizing: border-box; } body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: linear-gradient(180deg, #020617, #0f172a); color: var(--text); } header { padding: 3rem 1.5rem 2rem; max-width: 1200px; margin: 0 auto; } header h1 { font-size: 2.2rem; font-weight: 600; margin: 0 0 0.5rem; } header p { color: var(--muted); max-width: 600px; } .filters { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; } .filter-btn { padding: 0.4rem 0.9rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 0.85rem; } .filter-btn.active, .filter-btn:hover { color: var(--text); border-color: var(--accent); } main { max-width: 1200px; margin: 0 auto; padding: 1rem 1.5rem 4rem; } .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; } .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s ease, border-color 0.2s ease; } .card:hover { transform: translateY(-4px); border-color: var(--accent); } .card img { width: 100%; height: 180px; /* your spec */ object-fit: contain; /* preserve aspect ratio */ object-position: center; background-color: #fff; /* fill empty space */ display: block; } .card-content { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; } .card h3 { margin: 0; font-size: 1.05rem; font-weight: 500; } .meta { font-size: 0.8rem; color: var(--muted); } .desc { font-size: 0.85rem; color: #cbd5f5; } /* Image frame for cards */ .image-frame { height: 180px; /* your card image height */ background: #fff; /* fills empty space */ overflow: hidden; /* hides edges when we zoom/crop */ } /* Default image behavior inside the frame */ .image-frame img { width: 100%; height: 100%; object-fit: cover; /* crops slightly to fill frame */ object-position: center center; /* default crop */ } /* Optional: zoom on some images */ .zoom img { transform: scale(.7); /* slight zoom in */ } .card button { margin-top: auto; padding: 0.6rem; border-radius: 10px; border: none; background: linear-gradient(135deg, var(--accent), var(--accent-soft)); color: #020617; font-weight: 600; cursor: pointer; transition: opacity 0.2s ease; } .card button.disabled { background: #1e293b; color: var(--muted); cursor: not-allowed; opacity: 0.8; } .cart { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); width: 320px; max-height: 70vh; display: flex; flex-direction: column; } .cart-header { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; } .cart.collapsed #cart-toggle-icon { transform: rotate(-90deg); } #cart-toggle-icon { transition: transform 0.2s ease; } .cart-body { padding: 0.75rem 1rem; overflow-y: auto; } .cart.collapsed .cart-body { display: none; } .cart-item { border-top: 1px solid var(--border); padding-top: 0.5rem; margin-top: 0.5rem; } .cart-item-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); } .cart-item textarea { width: 100%; margin-top: 0.4rem; border-radius: 8px; border: 1px solid var(--border); background: #020617; color: var(--text); padding: 0.4rem; font-size: 0.8rem; } .qty { width: 60px; margin-top: 0.4rem; border-radius: 6px; border: 1px solid var(--border); background: #020617; color: var(--text); padding: 0.25rem; font-size: 0.8rem; } .remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.75rem; } .cart-body input[type="text"] { width: 100%; margin-bottom: 0.5rem; border-radius: 8px; border: 1px solid var(--border); background: #020617; color: var(--text); padding: 0.4rem; font-size: 0.85rem; } .submit { margin-top: 0.75rem; width: 100%; padding: 0.6rem; border-radius: 10px; border: none; background: var(--accent); font-weight: 600; cursor: pointer; } @media (max-width: 600px) { .cart { right: 1rem; left: 1rem; width: auto; } }
-        </style>
+     <style> :root {
+         --bg: #0f172a;
+         --card: #1e293b;
+         --muted: #94a3b8;
+         --text: #e5e7eb;
+         --accent: #38bdf8;
+         --accent-soft: #0ea5e9;
+         --border: #1e293b;
+         --radius: 14px;
+     }
+
+     * {
+         box-sizing: border-box;
+     }
+
+     body {
+         margin: 0;
+         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         background: linear-gradient(180deg, #020617, #0f172a);
+         color: var(--text);
+     }
+
+     header {
+         padding: 3rem 1.5rem 2rem;
+         max-width: 1200px;
+         margin: 0 auto;
+     }
+
+     header h1 {
+         font-size: 2.2rem;
+         font-weight: 600;
+         margin: 0 0 0.5rem;
+     }
+
+     header p {
+         color: var(--muted);
+         max-width: 600px;
+     }
+
+     .filters {
+         display: flex;
+         gap: 0.75rem;
+         margin-top: 1.5rem;
+         flex-wrap: wrap;
+     }
+
+     .filter-btn {
+         padding: 0.4rem 0.9rem;
+         border-radius: 999px;
+         border: 1px solid var(--border);
+         background: transparent;
+         color: var(--muted);
+         cursor: pointer;
+         font-size: 0.85rem;
+     }
+
+     .filter-btn.active,
+     .filter-btn:hover {
+         color: var(--text);
+         border-color: var(--accent);
+     }
+
+     main {
+         max-width: 1200px;
+         margin: 0 auto;
+         padding: 1rem 1.5rem 4rem;
+     }
+
+     .grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+         gap: 1.5rem;
+     }
+
+     .card {
+         background: var(--card);
+         border: 1px solid var(--border);
+         border-radius: var(--radius);
+         overflow: hidden;
+         display: flex;
+         flex-direction: column;
+         transition: transform 0.2s ease, border-color 0.2s ease;
+     }
+
+     .card:hover {
+         transform: translateY(-4px);
+         border-color: var(--accent);
+     }
+
+     .card img {
+         width: 100%;
+         height: 180px;
+         /* your spec */
+         object-fit: contain;
+         /* preserve aspect ratio */
+         object-position: center;
+         background-color: #fff;
+         /* fill empty space */
+         display: block;
+     }
+
+     .card-content {
+         padding: 1rem;
+         display: flex;
+         flex-direction: column;
+         gap: 0.5rem;
+         flex-grow: 1;
+     }
+
+     .card h3 {
+         margin: 0;
+         font-size: 1.05rem;
+         font-weight: 500;
+     }
+
+     .meta {
+         font-size: 0.8rem;
+         color: var(--muted);
+     }
+
+     .desc {
+         font-size: 0.85rem;
+         color: #cbd5f5;
+     }
+
+     /* Image frame for cards */
+     .image-frame {
+         height: 180px;
+         /* your card image height */
+         background: #fff;
+         /* fills empty space */
+         overflow: hidden;
+         /* hides edges when we zoom/crop */
+     }
+
+     /* Default image behavior inside the frame */
+     .image-frame img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         /* crops slightly to fill frame */
+         object-position: center center;
+         /* default crop */
+     }
+
+     /* Optional: zoom on some images */
+     .zoom img {
+         transform: scale(.7);
+         /* slight zoom in */
+     }
+
+     .card button {
+         margin-top: auto;
+         padding: 0.6rem;
+         border-radius: 10px;
+         border: none;
+         background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+         color: #020617;
+         font-weight: 600;
+         cursor: pointer;
+         transition: opacity 0.2s ease;
+     }
+
+     .card button.disabled {
+         background: #1e293b;
+         color: var(--muted);
+         cursor: not-allowed;
+         opacity: 0.8;
+     }
+
+     .cart {
+         position: fixed;
+         bottom: 1.5rem;
+         right: 1.5rem;
+         background: var(--card);
+         border: 1px solid var(--border);
+         border-radius: var(--radius);
+         width: 320px;
+         max-height: 70vh;
+         display: flex;
+         flex-direction: column;
+     }
+
+     .cart-header {
+         padding: 0.75rem 1rem;
+         border-bottom: 1px solid var(--border);
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         cursor: pointer;
+         user-select: none;
+     }
+
+     .cart.collapsed #cart-toggle-icon {
+         transform: rotate(-90deg);
+     }
+
+     #cart-toggle-icon {
+         transition: transform 0.2s ease;
+     }
+
+     .cart-body {
+         padding: 0.75rem 1rem;
+         overflow-y: auto;
+     }
+
+     .cart.collapsed .cart-body {
+         display: none;
+     }
+
+     .cart-item {
+         border-top: 1px solid var(--border);
+         padding-top: 0.5rem;
+         margin-top: 0.5rem;
+     }
+
+     .cart-item-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         font-size: 0.85rem;
+         color: var(--muted);
+     }
+
+     .cart-item textarea {
+         width: 100%;
+         margin-top: 0.4rem;
+         border-radius: 8px;
+         border: 1px solid var(--border);
+         background: #020617;
+         color: var(--text);
+         padding: 0.4rem;
+         font-size: 0.8rem;
+     }
+
+     .qty {
+         width: 60px;
+         margin-top: 0.4rem;
+         border-radius: 6px;
+         border: 1px solid var(--border);
+         background: #020617;
+         color: var(--text);
+         padding: 0.25rem;
+         font-size: 0.8rem;
+     }
+
+     .remove-btn {
+         background: none;
+         border: none;
+         color: var(--muted);
+         cursor: pointer;
+         font-size: 0.75rem;
+     }
+
+     .cart-body input[type="text"] {
+         width: 100%;
+         margin-bottom: 0.5rem;
+         border-radius: 8px;
+         border: 1px solid var(--border);
+         background: #020617;
+         color: var(--text);
+         padding: 0.4rem;
+         font-size: 0.85rem;
+     }
+
+     .submit {
+         margin-top: 0.75rem;
+         width: 100%;
+         padding: 0.6rem;
+         border-radius: 10px;
+         border: none;
+         background: var(--accent);
+         font-weight: 600;
+         cursor: pointer;
+     }
+
+     @media (max-width: 600px) {
+         .cart {
+             right: 1rem;
+             left: 1rem;
+             width: auto;
+         }
+     }
+
+     </style>
     </head>
     <body>
         <header>
