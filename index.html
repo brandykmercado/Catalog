@@ -309,11 +309,17 @@ header p {
          margin-bottom: 0.5rem;
          border-radius: 8px;
          border: 1px solid var(--border);
-         background: #020617;
+         background: var(--card);  
          color: var(--text);
          padding: 0.4rem;
          font-size: 0.85rem;
      }
+.cart-body input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 5px rgba(100, 255, 218, 0.5);
+}
+
 
      .submit {
          margin-top: 0.75rem;
