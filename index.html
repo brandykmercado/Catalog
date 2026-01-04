@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -125,6 +125,26 @@
         font-size: 0.85rem;
         color: #cbd5f5;
       }
+      /* Image frame for cards */
+      .image-frame {
+        height: 180px;        /* your card image height */
+        background: #fff;     /* fills empty space */
+        overflow: hidden;     /* hides edges when we zoom/crop */
+      }
+
+      /* Default image behavior inside the frame */
+      .image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;    /* crops slightly to fill frame */
+        object-position: center center;  /* default crop */
+      }
+
+      /* Optional: zoom on some images */
+      .zoom img {
+        transform: scale(1.08);  /* slight zoom in */
+      }
+
 
       .card button {
         margin-top: auto;
@@ -306,17 +326,20 @@
           </div>
         </div>
 
-        <div class="card" data-category="sewing">
-          <img src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/2f0ad91e734b1bfc038bdfbc281bb7bd7c2d14bd/Stuff%20Sack.png">
-          <div class="card-content">
-            <h3>Drawstring Bag</h3>
-            <div class="meta">Material: Cotton or Ultralight Ripstop Nylon</div>
-            <div class="desc">Bag with a drastring top. Can be made with any material.</div>
-            <button onclick="addToCart(this, 'Drawstring Bag')">
-              Make me this, please!
-            </button>
-          </div>
+      <div class="card" data-category="sewing">
+        <div class="image-frame zoom">
+          <img src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/2f0ad91e734b1bfc038bdfbc281bb7bd7c2d14bd/Stuff%20Sack.png" alt="Drawstring Bag">
         </div>
+        <div class="card-content">
+          <h3>Drawstring Bag</h3>
+          <div class="meta">Material: Cotton or Ultralight Ripstop Nylon</div>
+          <div class="desc">Bag with a drawstring top. Can be made with any material.</div>
+          <button onclick="addToCart(this, 'Drawstring Bag')">
+            Make me this, please!
+          </button>
+        </div>
+      </div>
+
   
         <div class="card" data-category="sewing">
           <img src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/2f0ad91e734b1bfc038bdfbc281bb7bd7c2d14bd/Glasses%20Case.png">
