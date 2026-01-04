@@ -26,27 +26,45 @@
          color: var(--text);
      }
 
-     header {
-         padding: 3rem 1.5rem 2rem;
-         max-width: 1200px;
-         margin: 0 auto;
-     }
-
-header h1 {
-    font-family: 'Courier New', Courier, monospace; /* blocky, retro feel */
-    font-size: 3rem;  /* bigger than before */
-    font-weight: bold; /* very strong */
-    color: var(--accent); /* keeps your palette */
-    text-transform: uppercase; /* adds that retro catalog vibe */
-    letter-spacing: 0.1em; /* spaced out letters for emphasis */
-    margin: 0 0 0.5rem;
-    line-height: 1.1;
+header {
+    padding: 3rem 1.5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    border-top: 6px solid var(--accent); /* top bar */
+    background: linear-gradient(180deg, #0f172a 0%, #020617 100%); /* subtle gradient */
 }
 
-     header p {
-         color: var(--muted);
-         max-width: 600px;
-     }
+header h1 {
+    font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 2px; /* gives that slightly “catalog” feel */
+    color: var(--text);
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
+    display: inline-block;
+    position: relative;
+}
+
+header h1::after {
+    content: "";
+    display: block;
+    height: 4px; /* underline thickness */
+    width: 60%; /* underline length */
+    background: var(--accent); /* matches buttons */
+    margin-top: 0.25rem;
+    border-radius: 2px;
+}
+
+header p {
+    color: var(--muted);
+    max-width: 600px;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+}
+
 
      .filters {
          display: flex;
