@@ -210,10 +210,10 @@ header p {
 }
 
 .card button.disabled {
-    background: #1e293b;
+    background: var(--border);
     color: var(--muted);
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 
@@ -645,6 +645,26 @@ header p {
 <script>
 let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
 
+function updateCartButtons() {
+    document.querySelectorAll(".card").forEach((card) => {
+        const btn = card.querySelector("button");
+        const name = card.querySelector("h3").innerText;
+        if (cartItems.find((item) => item.name === name)) {
+            btn.classList.add("disabled");
+            btn.disabled = true;
+            btn.textContent = "In Cart";
+        } else {
+            btn.classList.remove("disabled");
+            btn.disabled = false;
+            btn.textContent = "Make me this, please!";
+        }
+    });
+}
+
+// Run this on page load
+updateCartButtons();
+
+
 // Save cart to localStorage
 function saveCart() {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -763,6 +783,8 @@ function toggleCart() {
 
 // Initialize cart on page load
 renderCart();
+
+    
 </script>
 
     </body>
