@@ -617,8 +617,128 @@ header p {
                 </form>
             </div>
         </div>
-        <script>
-            let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]"); function saveCart() { localStorage.setItem("cartItems", JSON.stringify(cartItems)); } function addToCart(button, name) { if (cartItems.find((i) => i.name === name)) return; cartItems.push({ name, notes: "", qty: 1 }); button.classList.add("disabled"); button.textContent = "In Cart"; button.disabled = true; saveCart(); renderCart(true); } function removeFromCart(name) { cartItems = cartItems.filter((i) => i.name !== name); document.querySelectorAll(".card").forEach((card) => { const btn = card.querySelector("button"); if ( btn && btn.textContent === "In Cart" && card.innerText.includes(name) ) { btn.classList.remove("disabled"); btn.disabled = false; btn.textContent = "Make me this, please!"; } }); saveCart(); renderCart(); } function renderCart(autoScroll) { const container = document.getElementById("cart-items"); container.innerHTML = ""; document.getElementById("cart-count").textContent = cartItems.length; cartItems.forEach((item) => { const wrap = document.createElement("div"); wrap.className = "cart-item"; wrap.innerHTML = <div class="cart-item-header"> <span>${item.name}</span> <button type="button" class="remove-btn">Remove</button> </div> <input class="qty" type="number" min="1" value="${item.qty}" /> <textarea placeholder="Notes for this item (color, special requests, etc.)">${item.notes}</textarea> ; wrap.querySelector(".remove-btn").onclick = () => removeFromCart(item.name); wrap.querySelector(".qty").oninput = (e) => { item.qty = e.target.value; saveCart(); }; wrap.querySelector("textarea").oninput = (e) => { item.notes = e.target.value; saveCart(); }; container.appendChild(wrap); }); if (autoScroll) { document.getElementById("cart").classList.remove("collapsed"); document.getElementById("cart-body").scrollTop = document.getElementById("cart-body").scrollHeight; } } function prepareEmail() { if (cartItems.length === 0) { alert("Please add at least one item."); return false; } const name = document.getElementById("requester-name").value; const lines = cartItems.map((i) => { const base = - ${i.name} (Qty: ${i.qty}); return i.notes.trim() ? ${base}: ${i.notes} : base; }); document.getElementById( "email-message" ).value = Request from ${name}:\n\n${lines.join("\n")}; return true; } function filterItems(category, btn) { document .querySelectorAll(".filter-btn") .forEach((b) => b.classList.remove("active")); btn.classList.add("active"); document.querySelectorAll(".card").forEach((card) => { card.style.display = category === "all" || card.dataset.category === category ? "flex" : "none"; }); } function toggleCart() { document.getElementById("cart").classList.toggle("collapsed"); } renderCart();
-        </script>
+<script>
+let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+// Save cart to localStorage
+function saveCart() {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+}
+
+// Add item to cart
+function addToCart(button, name) {
+    // Prevent duplicates
+    if (cartItems.find((i) => i.name === name)) return;
+
+    cartItems.push({ name, notes: "", qty: 1 });
+
+    // Disable button in card
+    button.classList.add("disabled");
+    button.textContent = "In Cart";
+    button.disabled = true;
+
+    saveCart();
+    renderCart(true);
+}
+
+// Remove item from cart
+function removeFromCart(name) {
+    cartItems = cartItems.filter((i) => i.name !== name);
+
+    // Reset button in cards
+    document.querySelectorAll(".card").forEach((card) => {
+        const btn = card.querySelector("button");
+        if (btn && btn.textContent === "In Cart" && card.innerText.includes(name)) {
+            btn.classList.remove("disabled");
+            btn.disabled = false;
+            btn.textContent = "Make me this, please!";
+        }
+    });
+
+    saveCart();
+    renderCart();
+}
+
+// Render cart
+function renderCart(autoScroll = false) {
+    const container = document.getElementById("cart-items");
+    container.innerHTML = "";
+    document.getElementById("cart-count").textContent = cartItems.length;
+
+    cartItems.forEach((item) => {
+        const wrap = document.createElement("div");
+        wrap.className = "cart-item";
+
+        // Use backticks for HTML template
+        wrap.innerHTML = `
+            <div class="cart-item-header">
+                <span>${item.name}</span>
+                <button type="button" class="remove-btn">Remove</button>
+            </div>
+            <input class="qty" type="number" min="1" value="${item.qty}" />
+            <textarea placeholder="Notes for this item (color, special requests, etc.)">${item.notes}</textarea>
+        `;
+
+        // Remove item button
+        wrap.querySelector(".remove-btn").onclick = () => removeFromCart(item.name);
+
+        // Quantity input
+        wrap.querySelector(".qty").oninput = (e) => {
+            item.qty = parseInt(e.target.value) || 1;
+            saveCart();
+        };
+
+        // Notes textarea
+        wrap.querySelector("textarea").oninput = (e) => {
+            item.notes = e.target.value;
+            saveCart();
+        };
+
+        container.appendChild(wrap);
+    });
+
+    if (autoScroll) {
+        const cartEl = document.getElementById("cart");
+        cartEl.classList.remove("collapsed");
+        document.getElementById("cart-body").scrollTop = document.getElementById("cart-body").scrollHeight;
+    }
+}
+
+// Prepare email for Formspree
+function prepareEmail() {
+    if (cartItems.length === 0) {
+        alert("Please add at least one item.");
+        return false;
+    }
+
+    const name = document.getElementById("requester-name").value;
+    const lines = cartItems.map((i) => {
+        const base = `- ${i.name} (Qty: ${i.qty})`;
+        return i.notes.trim() ? `${base}: ${i.notes}` : base;
+    });
+
+    document.getElementById("email-message").value = `Request from ${name}:\n\n${lines.join("\n")}`;
+    return true;
+}
+
+// Filter items by category
+function filterItems(category, btn) {
+    document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    document.querySelectorAll(".card").forEach((card) => {
+        card.style.display = category === "all" || card.dataset.category === category ? "flex" : "none";
+    });
+}
+
+// Toggle cart collapse/expand
+function toggleCart() {
+    document.getElementById("cart").classList.toggle("collapsed");
+}
+
+// Initialize cart on page load
+renderCart();
+</script>
+
     </body>
 </html>
