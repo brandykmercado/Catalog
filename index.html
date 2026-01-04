@@ -1,235 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Maker Catalog</title>
-    <style>
-      :root {
-        --bg: #0f172a;
-        --card: #1e293b;
-        --muted: #94a3b8;
-        --text: #e5e7eb;
-        --accent: #38bdf8;
-        --accent-soft: #0ea5e9;
-        --border: #1e293b;
-        --radius: 14px;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background: linear-gradient(180deg, #020617, #0f172a);
-        color: var(--text);
-      }
-
-      header {
-        padding: 3rem 1.5rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      header h1 {
-        font-size: 2.6rem;
-        font-weight: 700;
-        margin: 0 0 0.75rem;
-        letter-spacing: -0.02em;
-      }
-
-      header h1::after {
-        content: "";
-        display: block;
-        width: 72px;
-        height: 3px;
-        background: var(--accent);
-        margin-top: 0.6rem;
-        border-radius: 2px;
-      }
-
-      header p {
-        color: var(--muted);
-        max-width: 720px;
-      }
-
-      .filters {
-        display: flex;
-        gap: 0.75rem;
-        margin-top: 1.5rem;
-        flex-wrap: wrap;
-      }
-
-      .filter-btn {
-        padding: 0.4rem 0.9rem;
-        border-radius: 999px;
-        border: 1px solid var(--border);
-        background: transparent;
-        color: var(--muted);
-        cursor: pointer;
-        font-size: 0.85rem;
-      }
-
-      .filter-btn.active,
-      .filter-btn:hover {
-        color: var(--text);
-        border-color: var(--accent);
-      }
-
-      main {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 1rem 1.5rem 4rem;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 1.5rem;
-      }
-
-      .card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        transition: transform 0.2s ease, border-color 0.2s ease;
-      }
-
-      .card:hover {
-        transform: translateY(-4px);
-        border-color: var(--accent);
-      }
-
-      .card img {
-        width: 100%;
-        height: 180px;
-        object-fit: contain;
-        object-position: center;
-        background-color: #fff;
-        display: block;
-      }
-
-      .card-content {
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        flex-grow: 1;
-      }
-
-      .card h3 {
-        margin: 0;
-        font-size: 1.05rem;
-        font-weight: 500;
-      }
-
-      .meta {
-        font-size: 0.8rem;
-        color: var(--muted);
-      }
-
-      .desc {
-        font-size: 0.85rem;
-        color: #cbd5f5;
-      }
-
-      .card button {
-        margin-top: auto;
-        padding: 0.6rem;
-        border-radius: 10px;
-        border: none;
-        background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-        color: #020617;
-        font-weight: 600;
-        cursor: pointer;
-        transition: opacity 0.2s ease;
-      }
-
-      .card button.disabled {
-        background: #1e293b;
-        color: var(--muted);
-        cursor: not-allowed;
-        opacity: 0.8;
-      }
-
-      .cart {
-        position: fixed;
-        bottom: 1.5rem;
-        right: 1.5rem;
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        width: 320px;
-        max-height: 70vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .cart-header {
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-        user-select: none;
-      }
-
-      .cart.collapsed #cart-toggle-icon {
-        transform: rotate(-90deg);
-      }
-
-      #cart-toggle-icon {
-        transition: transform 0.2s ease;
-      }
-
-      .cart-body {
-        padding: 0.75rem 1rem;
-        overflow-y: auto;
-      }
-
-      .cart.collapsed .cart-body {
-        display: none;
-      }
-
-      @media (max-width: 600px) {
-        .cart {
-          right: 1rem;
-          left: 1rem;
-          width: auto;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>My Maker Catalog</h1>
-      <p>
-        Things I make by hand for friends and family. Sewing and 3D printing
-        projects you can request. Since I can purchase any fabric or filament for
-        my printer, let me know in the request notes if you envision a certain
-        color, pattern, size, or fabric, and I'll do my best to create it.
-      </p>
-      <div class="filters">
-        <button class="filter-btn active" onclick="filterItems('all', this)">
-          All
-        </button>
-        <button class="filter-btn" onclick="filterItems('sewing', this)">
-          Sewing
-        </button>
-        <button class="filter-btn" onclick="filterItems('3d', this)">
-          3D Printing
-        </button>
-      </div>
-    </header>
-
-    <!-- content unchanged except typo fixes -->
-
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My Maker Catalog</title>
+        <style>
+            :root { --bg: #0f172a; --card: #1e293b; --muted: #94a3b8; --text: #e5e7eb; --accent: #38bdf8; --accent-soft: #0ea5e9; --border: #1e293b; --radius: 14px; } * { box-sizing: border-box; } body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: linear-gradient(180deg, #020617, #0f172a); color: var(--text); } header { padding: 3rem 1.5rem 2rem; max-width: 1200px; margin: 0 auto; } header h1 { font-size: 2.2rem; font-weight: 600; margin: 0 0 0.5rem; } header p { color: var(--muted); max-width: 600px; } .filters { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; } .filter-btn { padding: 0.4rem 0.9rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 0.85rem; } .filter-btn.active, .filter-btn:hover { color: var(--text); border-color: var(--accent); } main { max-width: 1200px; margin: 0 auto; padding: 1rem 1.5rem 4rem; } .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; } .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s ease, border-color 0.2s ease; } .card:hover { transform: translateY(-4px); border-color: var(--accent); } .card img { width: 100%; height: 180px; /* your spec */ object-fit: contain; /* preserve aspect ratio */ object-position: center; background-color: #fff; /* fill empty space */ display: block; } .card-content { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; } .card h3 { margin: 0; font-size: 1.05rem; font-weight: 500; } .meta { font-size: 0.8rem; color: var(--muted); } .desc { font-size: 0.85rem; color: #cbd5f5; } /* Image frame for cards */ .image-frame { height: 180px; /* your card image height */ background: #fff; /* fills empty space */ overflow: hidden; /* hides edges when we zoom/crop */ } /* Default image behavior inside the frame */ .image-frame img { width: 100%; height: 100%; object-fit: cover; /* crops slightly to fill frame */ object-position: center center; /* default crop */ } /* Optional: zoom on some images */ .zoom img { transform: scale(.7); /* slight zoom in */ } .card button { margin-top: auto; padding: 0.6rem; border-radius: 10px; border: none; background: linear-gradient(135deg, var(--accent), var(--accent-soft)); color: #020617; font-weight: 600; cursor: pointer; transition: opacity 0.2s ease; } .card button.disabled { background: #1e293b; color: var(--muted); cursor: not-allowed; opacity: 0.8; } .cart { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); width: 320px; max-height: 70vh; display: flex; flex-direction: column; } .cart-header { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; } .cart.collapsed #cart-toggle-icon { transform: rotate(-90deg); } #cart-toggle-icon { transition: transform 0.2s ease; } .cart-body { padding: 0.75rem 1rem; overflow-y: auto; } .cart.collapsed .cart-body { display: none; } .cart-item { border-top: 1px solid var(--border); padding-top: 0.5rem; margin-top: 0.5rem; } .cart-item-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); } .cart-item textarea { width: 100%; margin-top: 0.4rem; border-radius: 8px; border: 1px solid var(--border); background: #020617; color: var(--text); padding: 0.4rem; font-size: 0.8rem; } .qty { width: 60px; margin-top: 0.4rem; border-radius: 6px; border: 1px solid var(--border); background: #020617; color: var(--text); padding: 0.25rem; font-size: 0.8rem; } .remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.75rem; } .cart-body input[type="text"] { width: 100%; margin-bottom: 0.5rem; border-radius: 8px; border: 1px solid var(--border); background: #020617; color: var(--text); padding: 0.4rem; font-size: 0.85rem; } .submit { margin-top: 0.75rem; width: 100%; padding: 0.6rem; border-radius: 10px; border: none; background: var(--accent); font-weight: 600; cursor: pointer; } @media (max-width: 600px) { .cart { right: 1rem; left: 1rem; width: auto; } }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>My Maker Catalog</h1>
+            <p>
+                Things I make by hand for friends and family. Sewing and 3D
+                printing projects you can request. Since I can purchase any
+                fabric or filament for my printer, let me know in the request
+                notes if you envision a certain color, pattern, size, or fabric,
+                and I'll do my best to create it. Or I can pick out something
+                that I think fits your style.
+            </p>
+            <div class="filters">
+                <button
+                    class="filter-btn active"
+                    onclick="filterItems('all', this)"
+                >
+                    All
+                </button>
+                <button
+                    class="filter-btn"
+                    onclick="filterItems('sewing', this)"
+                >
+                    Sewing
+                </button>
+                <button class="filter-btn" onclick="filterItems('3d', this)">
+                    3D Printing
+                </button>
+            </div>
+        </header>
+        <main>
+            <div class="grid">
+                <div class="card" data-category="sewing">
+                    <img
+                        src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/3f5fe5bdea9833b1da7c525a0c29f82039c32229/Box%20Bag%202.png"
+                    />
+                    <div class="card-content">
+                        <h3>Box Bag</h3>
+                        <div class="meta">
+                            Material: Cotton or Ultralight Ripstop Nylon
+                        </div>
+                        <div class="desc">
+                            A versatile zipper bag. Can make with any material
+                            and can customize the size.
+                        </div>
+                        <button onclick="addToCart(this, 'Box Bag')">
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="sewing">
+                    <img
+                        src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/2f0ad91e734b1bfc038bdfbc281bb7bd7c2d14bd/Roll%20Down%20Dry%20Bag.png"
+                    />
+                    <div class="card-content">
+                        <h3>Roll Down Bag</h3>
+                        <div class="meta">
+                            Material: Ultralight Ripstop Nylon
+                        </div>
+                        <div class="desc">
+                            Water resistant and perfect for hiking/camping. Not
+                            completely waterproof, so I do not recommend
+                            submerging in water.
+                        </div>
+                        <button onclick="addToCart(this, 'Roll Down Bag')">
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="sewing">
+                    <img
+                        src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/019667f3d4ff574db5e3c09dab315b79e572444a/Stuff%20Sack.png"
+                    />
+                    <div class="card-content">
+                        <h3>Drawstring Bag</h3>
+                        <div class="meta">
+                            Material: Cotton or Ultralight Ripstop Nylon
+                        </div>
+                        <div class="desc">
+                            Bag with a drawstring top. Can be made with any
+                            material.
+                        </div>
+                        <button onclick="addToCart(this, 'Drawstring Bag')">
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="sewing">
+                    <img
+                        src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/3f5fe5bdea9833b1da7c525a0c29f82039c32229/Glasses%20Case%202.png"
+                    />
+                    <div class="card-content">
+                        <h3>Glasses Case</h3>
+                        <div class="meta">Material: Cotton</div>
+                        <div class="desc">
+                            Put your glasses or sunglasses in this soft
+                            protective case.
+                        </div>
+                        <button onclick="addToCart(this, 'Glasses Case')">
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="sewing">
+                    <img
+                        src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/2f0ad91e734b1bfc038bdfbc281bb7bd7c2d14bd/Wallet.png"
+                    />
+                    <div class="card-content">
+                        <h3>Keychain Wallet</h3>
+                        <div class="meta">
+                            Material: Cotton or Ultralight Ripstop Nylon
+                        </div>
+                        <div class="desc">
+                            Small wallet with two internal pockets and attached
+                            keychain.
+                        </div>
+                        <button onclick="addToCart(this, 'Wallet')">
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="3d">
+                    <img
+                        src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/3f5fe5bdea9833b1da7c525a0c29f82039c32229/Laptop%20Stand.png"
+                    />
+                    <div class="card-content">
+                        <h3>Laptop Stand</h3>
+                        <div class="desc">
+                            This raises your laptop to be even with your second
+                            monitor. Yay for ergonomics!
+                        </div>
+                        <button onclick="addToCart(this, 'Laptop Stand')">
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="3d">
+                    <img
+                        src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/2f0ad91e734b1bfc038bdfbc281bb7bd7c2d14bd/Ninendo%20Switch%20Controler%20Handles.png"
+                    />
+                    <div class="card-content">
+                        <h3>Nintendo Switch Handles</h3>
+                        <div class="desc">
+                            These handles turn small Nintendo Switch controllers
+                            into something that feels more like a standard
+                            gaming controller.
+                        </div>
+                        <button
+                            onclick="addToCart(this, 'Nintendo Controllers')"
+                        >
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="3d">
+                    <img
+                        src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/3f5fe5bdea9833b1da7c525a0c29f82039c32229/Coaster.png"
+                    />
+                    <div class="card-content">
+                        <h3>Coasters</h3>
+                        <div class="desc">
+                            Let me know how many coasters and what color you'd
+                            like.
+                        </div>
+                        <button onclick="addToCart(this, 'Coasters')">
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="3d">
+                    <img
+                        src="https://raw.githubusercontent.com/brandykmercado/PortfolioImages/2f0ad91e734b1bfc038bdfbc281bb7bd7c2d14bd/Custom%20LED%20Lamp.png"
+                    />
+                    <div class="card-content">
+                        <h3>Custom LED Desk Lamp</h3>
+                        <div class="desc">
+                            Battery or cord powered lamp. If your design is
+                            simple enough, I can create any shape you'd like!
+                        </div>
+                        <button onclick="addToCart(this, 'LED Desk Lamp')">
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="3d">
+                    <img
+                        src="https://img.freepik.com/premium-vector/hiking-outdoor-adventure-logo-vector-template_97886-23429.jpg"
+                    />
+                    <div class="card-content">
+                        <h3>Backpacking Essentials</h3>
+                        <div class="desc">
+                            I recently printed many small items for a
+                            backpacking trip. Let me know if you'd like a tent
+                            stake pusher, safety whistle, carabiners, or a camp
+                            sandal clip to attach to your bag.
+                        </div>
+                        <button
+                            onclick="addToCart(this, 'Backpacking Essentials')"
+                        >
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="sewing">
+                    <img
+                        src="https://img.freepik.com/premium-vector/coming-soon-brand-new-icon-simple-vector-holding-information_98396-81709.jpg"
+                    />
+                    <div class="card-content">
+                        <h3>Dog Carrier Bag: In Progress</h3>
+                        <div class="desc">
+                            An over the shoulder bag to hold a small dog while
+                            you're out on the town.
+                        </div>
+                        <button onclick="addToCart(this, 'Dog Carrier Bag')">
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="sewing">
+                    <img
+                        src="https://img.freepik.com/premium-vector/coming-soon-brand-new-icon-simple-vector-holding-information_98396-81709.jpg"
+                    />
+                    <div class="card-content">
+                        <h3>Ultralight Backpack: Design Stage</h3>
+                        <div class="desc">
+                            An extremely lightweight pack for backpacking. My
+                            goal is to create a roll top bag around 40 to 50L
+                            with a hip belt and load straps as well as a
+                            smaller, more simple 30L pack for day hikes.
+                        </div>
+                        <button
+                            onclick="addToCart(this, 'Ultralight Backpack')"
+                        >
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="3d">
+                    <img
+                        src="https://static.vecteezy.com/system/resources/thumbnails/023/233/339/small_2x/settings-icon-customize-illustration-sign-mechanical-symbol-vector.jpg"
+                    />
+                    <div class="card-content">
+                        <h3>Custom 3D Printed Request</h3>
+                        <div class="desc">
+                            If you don't see what you want on here, let me know
+                            what you are looking for, and I can research how to
+                            create it.
+                        </div>
+                        <button
+                            onclick="addToCart(this, 'Custom 3D Printed Request')"
+                        >
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+                <div class="card" data-category="sewing">
+                    <img
+                        src="https://static.vecteezy.com/system/resources/thumbnails/023/233/339/small_2x/settings-icon-customize-illustration-sign-mechanical-symbol-vector.jpg"
+                    />
+                    <div class="card-content">
+                        <h3>Custom Sewing Request</h3>
+                        <div class="desc">
+                            If you don't see what you want on here, let me know
+                            what you are looking for, and I can research how to
+                            create it.
+                        </div>
+                        <button
+                            onclick="addToCart(this, 'Custom Sewing Request')"
+                        >
+                            Make me this, please!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div class="cart collapsed" id="cart">
+            <div class="cart-header" onclick="toggleCart()">
+                <strong>Your Requests</strong>
+                <div style="display: flex; align-items: center; gap: 0.5rem">
+                    <span id="cart-count">0</span>
+                    <span id="cart-toggle-icon">▾</span>
+                </div>
+            </div>
+            <div class="cart-body" id="cart-body">
+                <form
+                    action="https://formspree.io/f/xpwwowzw"
+                    method="POST"
+                    onsubmit="return prepareEmail()"
+                >
+                    <input
+                        type="text"
+                        name="name"
+                        id="requester-name"
+                        placeholder="Your name"
+                        required
+                    />
+                    <div id="cart-items"></div>
+                    <input type="hidden" name="message" id="email-message" />
+                    <button type="submit" class="submit">Send Request</button>
+                </form>
+            </div>
+        </div>
+        <script>
+            let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]"); function saveCart() { localStorage.setItem("cartItems", JSON.stringify(cartItems)); } function addToCart(button, name) { if (cartItems.find((i) => i.name === name)) return; cartItems.push({ name, notes: "", qty: 1 }); button.classList.add("disabled"); button.textContent = "In Cart"; button.disabled = true; saveCart(); renderCart(true); } function removeFromCart(name) { cartItems = cartItems.filter((i) => i.name !== name); document.querySelectorAll(".card").forEach((card) => { const btn = card.querySelector("button"); if ( btn && btn.textContent === "In Cart" && card.innerText.includes(name) ) { btn.classList.remove("disabled"); btn.disabled = false; btn.textContent = "Make me this, please!"; } }); saveCart(); renderCart(); } function renderCart(autoScroll) { const container = document.getElementById("cart-items"); container.innerHTML = ""; document.getElementById("cart-count").textContent = cartItems.length; cartItems.forEach((item) => { const wrap = document.createElement("div"); wrap.className = "cart-item"; wrap.innerHTML = <div class="cart-item-header"> <span>${item.name}</span> <button type="button" class="remove-btn">Remove</button> </div> <input class="qty" type="number" min="1" value="${item.qty}" /> <textarea placeholder="Notes for this item (color, special requests, etc.)">${item.notes}</textarea> ; wrap.querySelector(".remove-btn").onclick = () => removeFromCart(item.name); wrap.querySelector(".qty").oninput = (e) => { item.qty = e.target.value; saveCart(); }; wrap.querySelector("textarea").oninput = (e) => { item.notes = e.target.value; saveCart(); }; container.appendChild(wrap); }); if (autoScroll) { document.getElementById("cart").classList.remove("collapsed"); document.getElementById("cart-body").scrollTop = document.getElementById("cart-body").scrollHeight; } } function prepareEmail() { if (cartItems.length === 0) { alert("Please add at least one item."); return false; } const name = document.getElementById("requester-name").value; const lines = cartItems.map((i) => { const base = - ${i.name} (Qty: ${i.qty}); return i.notes.trim() ? ${base}: ${i.notes} : base; }); document.getElementById( "email-message" ).value = Request from ${name}:\n\n${lines.join("\n")}; return true; } function filterItems(category, btn) { document .querySelectorAll(".filter-btn") .forEach((b) => b.classList.remove("active")); btn.classList.add("active"); document.querySelectorAll(".card").forEach((card) => { card.style.display = category === "all" || card.dataset.category === category ? "flex" : "none"; }); } function toggleCart() { document.getElementById("cart").classList.toggle("collapsed"); } renderCart();
+        </script>
+    </body>
 </html>
