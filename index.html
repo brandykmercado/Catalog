@@ -33,13 +33,14 @@
      }
 
 header h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 3rem;
-    font-weight: 700;
-    background: linear-gradient(45deg, #38bdf8, #0ea5e9);
+    font-family: 'Poppins', system-ui, sans-serif; /* clean modern font */
+    font-size: 3rem; /* bigger and more impactful */
+    font-weight: 800; /* extra bold */
+    letter-spacing: 0.05em; /* subtle spacing for elegance */
+    background: linear-gradient(90deg, var(--accent), var(--accent-soft));
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 1px;
+    -webkit-text-fill-color: transparent; /* gradient text effect */
+    margin: 0 0 1rem;
 }
 
      header p {
