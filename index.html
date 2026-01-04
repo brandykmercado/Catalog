@@ -97,9 +97,11 @@
 
       .card img {
         width: 100%;
-        height: 180px;
-       /* object-fit: cover;/*
-        object-fit: contain; /* THIS is the key */
+        height: 180px;          /* your spec */
+        object-fit: contain;   /* preserve aspect ratio */
+        object-position: center;
+        background-color: #fff; /* fill empty space */
+        display: block;
       }
 
       .card-content {
